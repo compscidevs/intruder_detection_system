@@ -70,3 +70,24 @@ def recognize_face(face_embedding, threshold=0.6):
         if distance < threshold:
             return name
     return "unknown"
+
+
+def send_email(image_path):
+    msg = MIMEMultipart()
+    msg['From'] = formataddr(('Raspberry Pi', EMAIL_ADDRESS))
+    msg['To'] = OWNER_EMAIL
+    msg['Subject'] = 'Unknown Face Detected'
+
+    with open(image_path, 'rb') as img_file:
+        img = MIMEImage(img_file.read())
+        img.add_header('Content-Disposition', 'attachment', filename=os.path.basename(image_path))
+        msg.attach(img)
+
+    text = MIMEText('An unknown face was detected. See the attached image.')
+    msg.attach(text)
+
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        server.starttls()
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        server.sendmail(EMAIL_ADDRESS, OWNER_EMAIL, msg.as_string())
+
