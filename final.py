@@ -112,3 +112,9 @@ def initialize_serial(port):
     Initialize the serial connection.
     """
     return serial.Serial(port, baudrate=9600, timeout=1)
+
+
+def send_at_command(ser, command, wait_for_response=True):
+    """
+    Send an AT command to the SIM800L module and optionally wait for the response.
+    """
