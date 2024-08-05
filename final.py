@@ -124,3 +124,9 @@ def send_at_command(ser, command, wait_for_response=True):
         response = ser.read_all().decode(errors='ignore')  # Ignore decode errors
         return response
     return None
+
+
+def make_call(ser, phone_number):
+    """
+    Place a call to the specified phone number using the SIM800L module.
+    """
