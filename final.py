@@ -130,3 +130,6 @@ def make_call(ser, phone_number):
     """
     Place a call to the specified phone number using the SIM800L module.
     """
+    # Send the command to dial the number
+    response = send_at_command(ser, 'ATD' + phone_number + ';')
+    print(response)
