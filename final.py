@@ -63,3 +63,10 @@ def get_face_embedding(face_image):
     embedding = interpreter.get_tensor(output_details[0]['index'])[0]
     return embedding
 
+
+def recognize_face(face_embedding, threshold=0.6):
+    for name, known_embedding in known_faces.items():
+        distance = np.linalg.norm(known_embedding - face_embedding)
+        if distance < threshold:
+            return name
+    return "unknown"
