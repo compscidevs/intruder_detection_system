@@ -171,3 +171,47 @@ try:
 
             print(f"Detected faces: {len(faces)}")
 
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                face_image = frame[y:y+h, x:x+w]
+                face_embedding = get_face_embedding(face_image)
+                name = recognize_face(face_embedding)
+
+                if name == "unknown":
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                    cv2.putText(frame, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+                    print("unknown user")
+                    unknown_user_image_filename = "full_image.png"
+                    cv2.imwrite(unknown_user_image_filename, frame)
+                    send_email(unknown_user_image_filename)
+                    
+                    # Place a call after sending the email
+                    phone_number = '0709735982'  # Replace with the phone number you want to call
+                    print("Dialing...")
+                    make_call(ser, phone_number)
+
+                else:
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                    cv2.putText(frame, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+            cv2.imshow("Camera Preview", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+            if current_time - last_motion_time > 60:
+                print("No motion detected for 60 seconds. Turning off camera.")
+                motion_detected = False
+                picam2.stop()
+                cv2.destroyAllWindows()
+
+except KeyboardInterrupt:
+    print("Stopping camera preview...")
+
+finally:
+    GPIO.cleanup()
+    if motion_detected:
+        picam2.stop()
+    cv2.destroyAllWindows()
+    ser.close()
+    print("Camera preview stopped.")
+
