@@ -133,3 +133,11 @@ def make_call(ser, phone_number):
     # Send the command to dial the number
     response = send_at_command(ser, 'ATD' + phone_number + ';')
     print(response)
+
+
+def hang_up_call(ser):
+    """
+    Hang up the ongoing call.
+    """
+    response = send_at_command(ser, 'ATH')
+    print(response)
