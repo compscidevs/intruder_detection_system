@@ -34,3 +34,10 @@ GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # PIR sensor to GPIO4
 picam2 = Picamera2()
 camera_config = picam2.create_preview_configuration(main={"size": (640, 480)})
 picam2.configure(camera_config)
+
+# Load the Haar Cascade classifier for face detection
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+if face_cascade.empty():
+    print("Error loading Haar Cascade XML file.")
+else:
+    print("Haar Cascade XML file loaded successfully.")
