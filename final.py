@@ -102,3 +102,13 @@ def list_serial_ports():
     """
     List all available serial ports.
     """
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+        print(f"Port: {port.device}")
+
+
+def initialize_serial(port):
+    """
+    Initialize the serial connection.
+    """
+    return serial.Serial(port, baudrate=9600, timeout=1)
