@@ -18,8 +18,10 @@ import RPi.GPIO as GPIO
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
 EMAIL_ADDRESS = 'joshua.sj58@gmail.com'  # Replace with your Gmail address
-EMAIL_PASSWORD = 'mheh qjkq qrrw odmd'  # Replace with your Gmail password or app password
-OWNER_EMAIL = 'ssalijoshua2002@gmail.com'  # Replace with the owner's email address
+# Replace with your Gmail password or app password
+EMAIL_PASSWORD = 'mheh qjkq qrrw odmd'
+# Replace with the owner's email address
+OWNER_EMAIL = 'ssalijoshua2002@gmail.com'
 
 # Load known face embeddings and labels
 known_faces = {
@@ -50,11 +52,14 @@ interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
+
 def preprocess_face(face_image):
-    face_image = cv2.resize(face_image, (input_details[0]['shape'][2], input_details[0]['shape'][1]))
+    face_image = cv2.resize(
+        face_image, (input_details[0]['shape'][2], input_details[0]['shape'][1]))
     face_image = face_image.astype(np.uint8)
     face_image = np.expand_dims(face_image, axis=0)
     return face_image
+
 
 def get_face_embedding(face_image):
     preprocessed_face = preprocess_face(face_image)
@@ -80,7 +85,8 @@ def send_email(image_path):
 
     with open(image_path, 'rb') as img_file:
         img = MIMEImage(img_file.read())
-        img.add_header('Content-Disposition', 'attachment', filename=os.path.basename(image_path))
+        img.add_header('Content-Disposition', 'attachment',
+                       filename=os.path.basename(image_path))
         msg.attach(img)
 
     text = MIMEText('An unknown face was detected. See the attached image.')
@@ -91,3 +97,8 @@ def send_email(image_path):
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         server.sendmail(EMAIL_ADDRESS, OWNER_EMAIL, msg.as_string())
 
+
+def list_serial_ports():
+    """
+    List all available serial ports.
+    """
