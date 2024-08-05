@@ -25,3 +25,7 @@ known_faces = {
     'person1': np.array([0.1, 0.2, 0.3]),  # Replace with actual embeddings
     # Add more known faces here
 }
+
+# Setup GPIO mode
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # PIR sensor to GPIO4
