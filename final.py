@@ -170,3 +170,4 @@ try:
             faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
             print(f"Detected faces: {len(faces)}")
+
