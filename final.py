@@ -19,3 +19,9 @@ SMTP_PORT = 587
 EMAIL_ADDRESS = 'joshua.sj58@gmail.com'  # Replace with your Gmail address
 EMAIL_PASSWORD = 'mheh qjkq qrrw odmd'  # Replace with your Gmail password or app password
 OWNER_EMAIL = 'ssalijoshua2002@gmail.com'  # Replace with the owner's email address
+
+# Load known face embeddings and labels
+known_faces = {
+    'person1': np.array([0.1, 0.2, 0.3]),  # Replace with actual embeddings
+    # Add more known faces here
+}
