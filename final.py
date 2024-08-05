@@ -149,3 +149,24 @@ last_motion_time = time.time()
 port = '/dev/ttyS0'  # Adjust this to your correct serial port
 # Initialize serial connection
 ser = initialize_serial(port)
+
+try:
+    while True:
+        pir_state = GPIO.input(4)
+        current_time = time.time()
+
+        if pir_state == True:
+            if not motion_detected:
+                print('Motion Detected...')
+                motion_detected = True
+                last_motion_time = current_time
+                picam2.start()
+                print("Camera preview started.")
+
+        if motion_detected:
+            frame = picam2.capture_array()
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+            print(f"Detected faces: {len(faces)}")
