@@ -55,3 +55,11 @@ def preprocess_face(face_image):
     face_image = face_image.astype(np.uint8)
     face_image = np.expand_dims(face_image, axis=0)
     return face_image
+
+def get_face_embedding(face_image):
+    preprocessed_face = preprocess_face(face_image)
+    interpreter.set_tensor(input_details[0]['index'], preprocessed_face)
+    interpreter.invoke()
+    embedding = interpreter.get_tensor(output_details[0]['index'])[0]
+    return embedding
+
