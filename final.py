@@ -12,3 +12,10 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 from picamera2 import Picamera2
 import RPi.GPIO as GPIO
+
+# Email configuration for Gmail
+SMTP_SERVER = 'smtp.gmail.com'
+SMTP_PORT = 587
+EMAIL_ADDRESS = 'joshua.sj58@gmail.com'  # Replace with your Gmail address
+EMAIL_PASSWORD = 'mheh qjkq qrrw odmd'  # Replace with your Gmail password or app password
+OWNER_EMAIL = 'ssalijoshua2002@gmail.com'  # Replace with the owner's email address
