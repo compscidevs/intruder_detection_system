@@ -118,3 +118,9 @@ def send_at_command(ser, command, wait_for_response=True):
     """
     Send an AT command to the SIM800L module and optionally wait for the response.
     """
+    ser.write((command + '\r\n').encode())
+    if wait_for_response:
+        time.sleep(1)  # wait for response
+        response = ser.read_all().decode(errors='ignore')  # Ignore decode errors
+        return response
+    return None
