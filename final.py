@@ -171,3 +171,18 @@ try:
 
             print(f"Detected faces: {len(faces)}")
 
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                face_image = frame[y:y+h, x:x+w]
+                face_embedding = get_face_embedding(face_image)
+                name = recognize_face(face_embedding)
+
+                if name == "unknown":
+                    cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                    cv2.putText(frame, name, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+                    print("unknown user")
+                    unknown_user_image_filename = "full_image.png"
+                    cv2.imwrite(unknown_user_image_filename, frame)
+                    send_email(unknown_user_image_filename)
+                    
+                
