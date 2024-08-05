@@ -49,3 +49,9 @@ interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
+
+def preprocess_face(face_image):
+    face_image = cv2.resize(face_image, (input_details[0]['shape'][2], input_details[0]['shape'][1]))
+    face_image = face_image.astype(np.uint8)
+    face_image = np.expand_dims(face_image, axis=0)
+    return face_image
