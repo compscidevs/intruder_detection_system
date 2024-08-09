@@ -97,7 +97,14 @@ def send_email(image_path):
         server.sendmail(EMAIL_ADDRESS, OWNER_EMAIL, msg.as_string())
 
 
-
+def list_serial_ports():
+    """
+    List all available serial ports.
+    """
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+        print(f"Port: {port.device}")
+        
 
 motion_detected = False
 last_motion_time = time.time()
