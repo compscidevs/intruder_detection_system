@@ -104,6 +104,12 @@ def list_serial_ports():
     ports = serial.tools.list_ports.comports()
     for port in ports:
         print(f"Port: {port.device}")
+
+
+def initialize_serial(port):
+    """
+    Initialize the serial connection.
+    """
         
 
 motion_detected = False
