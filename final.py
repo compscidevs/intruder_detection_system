@@ -110,6 +110,7 @@ def initialize_serial(port):
     """
     Initialize the serial connection.
     """
+    return serial.Serial(port, baudrate=9600, timeout=1)
         
 
 motion_detected = False
