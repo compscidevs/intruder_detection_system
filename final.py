@@ -111,6 +111,34 @@ def initialize_serial(port):
     Initialize the serial connection.
     """
     return serial.Serial(port, baudrate=9600, timeout=1)
+
+def send_at_command(ser, command, wait_for_response=True):
+    """
+    Send an AT command to the SIM800L module and optionally wait for the response.
+    """
+    ser.write((command + '\r\n').encode())
+    if wait_for_response:
+        time.sleep(1)  # wait for response
+        response = ser.read_all().decode(errors='ignore')  # Ignore decode errors
+        return response
+    return None
+
+
+def make_call(ser, phone_number):
+    """
+    Place a call to the specified phone number using the SIM800L module.
+    """
+    # Send the command to dial the number
+    response = send_at_command(ser, 'ATD' + phone_number + ';')
+    print(response)
+
+
+def hang_up_call(ser):
+    """
+    Hang up the ongoing call.
+    """
+    response = send_at_command(ser, 'ATH')
+    print(response)
         
 
 motion_detected = False
