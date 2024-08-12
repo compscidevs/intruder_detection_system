@@ -16,16 +16,13 @@ import RPi.GPIO as GPIO
 # Email configuration for Gmail
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
-EMAIL_ADDRESS = 'joshua.sj58@gmail.com'  # Replace with your Gmail address
-# Replace with your Gmail password or app password
+EMAIL_ADDRESS = 'joshua.sj58@gmail.com'  # Sender's Gmail address
 EMAIL_PASSWORD = 'mheh qjkq qrrw odmd'
-# Replace with the owner's email address
 OWNER_EMAIL = 'ssalijoshua2002@gmail.com'
 
 # Load known face embeddings and labels
 known_faces = {
-    'person1': np.array([0.1, 0.2, 0.3]),  # Replace with actual embeddings
-    # Add more known faces here
+    'person1': np.array([0.1, 0.2, 0.3]), 
 }
 
 # Setup GPIO mode
@@ -118,7 +115,7 @@ def send_at_command(ser, command, wait_for_response=True):
     """
     ser.write((command + '\r\n').encode())
     if wait_for_response:
-        time.sleep(1)  # wait for response
+        time.sleep(1)  # waiting for response
         response = ser.read_all().decode(errors='ignore')  # Ignore decode errors
         return response
     return None
@@ -145,7 +142,7 @@ motion_detected = False
 last_motion_time = time.time()
 
 # Specify the serial port
-port = '/dev/ttyS0'  # Adjust this to your correct serial port
+port = '/dev/ttyS0' 
 # Initialize serial connection
 ser = initialize_serial(port)
 
@@ -185,7 +182,7 @@ try:
                     send_email(unknown_user_image_filename)
                     
                     # Place a call after sending the email
-                    phone_number = '0709735982'  # Replace with the phone number you want to call
+                    phone_number = '0709735982' 
                     print("Dialing...")
                     make_call(ser, phone_number)
 
