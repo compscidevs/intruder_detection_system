@@ -12,7 +12,7 @@ mp_face_detection = mp.solutions.face_detection
 face_detection = mp_face_detection.FaceDetection(min_detection_confidence=0.2)
 mp_drawing = mp.solutions.drawing_utils
 
-# Load face embeddings and corresponding labels
+# Loading face embeddings and corresponding labels
 face_embeddings = np.load("face_embeddings.npy", allow_pickle=True).item()
 face_labels = np.load("face_labels.npy", allow_pickle=True)
 
@@ -22,8 +22,7 @@ def adjust_bbox(bbox, ih, iw, padding=0.2):
     y -= padding * h
     w += 2 * padding * w
     h += 2 * padding * h
-
-    # Ensure the coordinates are within bounds
+    
     x = max(int(x), 0)
     y = max(int(y), 0)
     w = min(int(x + w), iw)
@@ -31,16 +30,16 @@ def adjust_bbox(bbox, ih, iw, padding=0.2):
     return x, y, w, h
 
 def identify_face(image):
-    # Convert image to RGB
+    # Converting image to RGB
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     
-    # Extract face embeddings from the uploaded image
+    # Extracting face embeddings from the uploaded image
     new_face_encodings = face_recognition.face_encodings(image_rgb)
     
     if len(new_face_encodings) == 0:
         return "No face detected in the image."
     
-    # Iterate over detected faces (in case there are multiple)
+    # Iterating over detected faces (in case there are multiple)
     for new_face_encoding in new_face_encodings:
         # Initialize the best match variables
         best_match_name = "Unknown"
